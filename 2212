@@ -1,0 +1,29 @@
+#include <iostream>
+#include <algorithm>
+using namespace std;
+
+#define l 10001
+
+int main()
+{
+	int K,N;
+	cin >> N >> K;
+	int B[l];
+	for (int i = 0; i < N; i++) {
+		cin >> B[i];
+	}
+
+	sort(B, B+N);
+	int A[l];
+	for (int i = 0; i < N - 1; i++) {
+		A[i] = B[i + 1] - B[i];
+	}
+	sort(A, A + N - 1);
+	int sum;
+	sum = B[N - 1] - B[0];
+	for (int i = 0; i < K-1; i++) {
+		sum -= A[N - 2 - i];
+	}
+	cout << sum << "\n";
+	return 0;
+}
