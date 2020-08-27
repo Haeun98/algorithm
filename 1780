@@ -1,0 +1,65 @@
+#include <iostream>
+#include <algorithm>
+#define MAX 2187
+using namespace std;
+
+int paper[MAX][MAX];
+int cnt[3] = { 0,0,0 };
+
+void solve(int hor,int ver,int l) {
+	int i, j;
+	bool minus = true, zero = true, plus = true;
+	for (i = 0; i < l; i++) {
+		for (j = 0; j < l; j++) {
+			if (paper[hor + i][ver + j] == 0) {
+				minus = false;
+				plus = false;
+			}
+			else if (paper[hor + i][ver + j] == 1) {
+				minus = false;
+				zero = false;
+			}
+			else {
+				zero = false;
+				plus = false;
+			}
+		}
+	}
+	if (minus) {
+		cnt[0]++;
+	}
+	else if (zero) {
+		cnt[1]++;
+	}
+	else if (plus) {
+		cnt[2]++;
+	}
+	else {
+			solve(hor, ver, l / 3);
+			solve(hor+l/3, ver, l / 3);
+			solve(hor+2*l/3, ver, l / 3);
+			solve(hor, ver+l/3, l / 3);
+			solve(hor + l / 3, ver+l/3, l / 3);
+			solve(hor + 2 * l / 3, ver+l/3, l / 3);
+			solve(hor, ver + 2*l / 3, l / 3);
+			solve(hor + l / 3, ver +2* l / 3, l / 3);
+			solve(hor + 2 * l / 3, ver + 2*l / 3, l / 3);
+	}
+}
+	
+
+int main()
+{
+	int N;
+	cin >> N;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < N; j++) {
+			cin >> paper[i][j];
+		}
+	}
+	solve(0, 0, N);
+	cout << cnt[0] << endl;
+	cout << cnt[1] << endl;
+	cout << cnt[2] << endl;
+	return 0;
+}
