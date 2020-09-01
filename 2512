@@ -1,0 +1,45 @@
+#include <iostream>
+#include <algorithm>
+#define MAX 10001
+using namespace std;
+
+int main()
+{
+	int N,M,i;
+	cin >> N;
+	int Arr[MAX];
+	for (i = 0; i < N; i++) {
+		cin >> Arr[i];
+	}
+	cin >> M;
+	sort(Arr, Arr + N);
+	long long lo = 0, hi = Arr[N - 1];
+	long long sum = 0;
+	for (i = 0; i < N; i++) {
+		sum += Arr[i];
+	}
+	if (sum <= M) {
+		cout << Arr[N - 1] << "\n";
+		return 0;
+	}
+	while (lo + 1 < hi) {
+		sum = 0;
+		long long mid = (lo + hi) / 2;
+		for (i = 0; i < N; i++) {
+			if (Arr[i] > mid) {
+				sum += mid;
+			}
+			else {
+				sum += Arr[i];
+			}
+		}
+		if (sum > M) {
+			hi = mid;
+		}
+		else {
+			lo = mid;
+		}
+	}
+	cout << lo << "\n";
+	return 0;
+}
