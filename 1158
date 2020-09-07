@@ -1,0 +1,32 @@
+#include <iostream>
+#include <algorithm>
+#include <deque>
+using namespace std;
+
+int N, K;
+deque<int> dq;
+
+int main()
+{
+	cin >> N >> K;
+	int i;
+	for (i = 1; i <= N; i++) {
+		dq.push_back(i);
+	}
+	cout << "<";
+	for (i = 1; i <= N; i++) {
+		for (int j = 1; j < K; j++) {
+			int num = dq.front();
+			dq.pop_front();
+			dq.push_back(num);
+		}
+		if (dq.size() == 1) {
+			cout << dq.front();
+			break;
+		}
+		cout << dq.front() << ", ";
+		dq.pop_front();
+	}
+	cout << ">" << "\n";
+	return 0;
+}
