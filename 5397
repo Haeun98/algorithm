@@ -1,0 +1,50 @@
+#include <iostream>
+#include <string>
+#include <deque>
+using namespace std;
+
+int main(void) {
+	int N;
+	cin >> N;
+
+	for (int i = 0; i < N; i++) {
+		string s;
+		cin >> s;
+		char temp;
+		deque<char> dq1,dq2;
+		for (int j = 0; j < s.length(); j++) {
+			if ( s[j]== '<') {
+				if (dq1.size() != 0) {
+					temp = dq1.back();
+					dq2.push_front(temp);
+					dq1.pop_back();
+				}
+			}
+			else if (s[j] == '>') {
+				if (dq2.size() != 0) {
+					temp = dq2.front();
+					dq1.push_back(temp);
+					dq2.pop_front();
+				}
+			}
+			else if (s[j] == '-') {
+				if (dq1.size() != 0) {
+					dq1.pop_back();
+				}
+			}
+			else {
+				dq1.push_back(s[j]);
+			}
+		}
+		string answer;
+		while (!dq1.empty()) {
+			answer += dq1.front();
+			dq1.pop_front();
+		}
+		while (!dq2.empty()) {
+			answer += dq2.front();
+			dq2.pop_front();
+		}
+		cout << answer << "\n";
+	}
+}
