@@ -1,0 +1,45 @@
+#include <iostream>
+#include <string>
+#include <stack>
+using namespace std;
+
+int N;
+
+
+int main(void) {
+	cin >> N;
+
+	for (int i = 0; i < N; i++) {
+		stack<char> st;
+		string s;
+		cin >> s;
+		bool answer = true;
+
+		for (int j = 0; j < s.size(); j++) {
+			if (s[j] == '(') {
+				st.push('(');
+			}
+			else if (s[j] == ')') {
+				if (st.empty()) {
+					answer = false;
+					break;
+				}
+				else {
+					st.pop();
+				}
+			}
+		}
+		if (!st.empty()) {
+			answer = false;
+		}
+		else {
+		}
+		if (answer) {
+			cout << "YES" << "\n";
+		}
+		else{
+			cout << "NO" << "\n";
+		}
+	}
+	return 0;
+}
