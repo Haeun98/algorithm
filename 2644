@@ -1,0 +1,38 @@
+#include <iostream>
+#define MAX 4951
+using namespace std;
+
+int n, m;
+int chon[MAX] = {0};
+int MD[MAX][MAX];
+bool visited[MAX] = { false };
+
+void find(int p) {
+	visited[p] = true;
+	for (int i = 0; i < m; i++) {
+		if (MD[i][1] == p && !visited[MD[i][2]]) {
+			chon[MD[i][2]]=chon[p]+1;
+			find(MD[i][2]);
+		}
+		else if (MD[i][2] == p && !visited[MD[i][1]]) {
+			chon[MD[i][1]]=chon[p]+1;
+			find(MD[i][1]);
+		}
+	}
+}
+
+int main() {
+	int tar1, tar2;
+	cin >> n >> tar1 >> tar2 >> m;
+	for (int i = 0; i < m; i++) {
+		cin >> MD[i][1] >> MD[i][2];
+	}
+	find(tar1);
+	if (chon[tar2] == 0) {
+		cout << -1 << "\n";
+	}
+	else {
+		cout << chon[tar2] << "\n";
+	}
+	return 0;
+}
