@@ -1,0 +1,58 @@
+#include <iostream>
+#include <string>
+#include <queue>
+#define MAX 1001
+using namespace std;
+
+int N,M;
+int box[MAX][MAX];
+int dx[4] = { 0,1,0,-1 };
+int dy[4] = { -1,0,1,0 };
+queue<pair<pair<int, int>, int> > q;
+priority_queue<int> pq;
+
+void BFS() {
+	while (!q.empty()) {
+		int y = q.front().first.first;
+		int x = q.front().first.second;
+		int cnt = q.front().second;
+		pq.push(cnt);
+		q.pop();
+
+		for (int i = 0; i < 4; i++) {
+			int nextY = y + dy[i];
+			int nextX = x + dx[i];
+			if (nextX >= 0 && nextY >= 0 && nextX < M && nextY < N && box[nextY][nextX] == 0) {
+				box[nextY][nextX] = 1;
+				q.push(make_pair(make_pair(nextY, nextX), cnt + 1));
+			}
+		}
+	}
+}
+
+int main() {
+	cin >> M >> N;
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			cin >> box[i][j];
+		}
+	}
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			if (box[i][j] == 1) {
+				q.push(make_pair(make_pair(i, j), 0));
+			}
+		}
+	}
+	BFS();
+	for (int i = 0; i < N; i++) {
+		for (int j = 0; j < M; j++) {
+			if (box[i][j] ==0) {
+				cout << -1;
+				return 0;
+			}
+		}
+	}
+	cout << pq.top() << "\n";
+	return 0;
+}
